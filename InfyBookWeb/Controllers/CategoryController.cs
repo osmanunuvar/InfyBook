@@ -1,4 +1,5 @@
 ﻿using InfyBookWeb.Data;
+using InfyBookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfyBookWeb.Controllers
@@ -13,8 +14,8 @@ namespace InfyBookWeb.Controllers
 
         public IActionResult Index()
         {
-            var objCategoryList = _db.Categories.ToList();
-            return View();
+            IEnumerable<Category> objCategoryList = _db.Categories;
+            return View(objCategoryList);
         }
     }
 }

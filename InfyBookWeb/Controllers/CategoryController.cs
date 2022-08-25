@@ -41,9 +41,10 @@ namespace InfyBookWeb.Controllers
             return View(obj);
         }
 
+        //GET
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -71,6 +72,38 @@ namespace InfyBookWeb.Controllers
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+
+        //GET
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var catgeoryFromDb = _db.Categories.Find(id);
+            if (catgeoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(catgeoryFromDb);
+        }
+        //POST
+        [HttpPost,ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = _db.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+
+
         }
     }
 }

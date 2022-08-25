@@ -36,6 +36,7 @@ namespace InfyBookWeb.Controllers
 
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "category created succesfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -69,6 +70,7 @@ namespace InfyBookWeb.Controllers
 
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "category updated succesfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -101,6 +103,7 @@ namespace InfyBookWeb.Controllers
 
             _db.Categories.Remove(obj);
             _db.SaveChanges();
+            TempData["success"] = "category deleted succesfully";
             return RedirectToAction("Index");
 
 

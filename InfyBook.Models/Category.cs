@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace InfyBookWeb.Models
+namespace InfyBook.Models
 {
     public class Category
     {
@@ -10,7 +10,7 @@ namespace InfyBookWeb.Models
         [Required]
         public string Name { get; set; }
         [DisplayName("Display Order")]
-        [Range(1,100,ErrorMessage ="Display Order must be between 1 and 100 omly.")]
+        [Range(1, 100, ErrorMessage = "Display Order must be between 1 and 100 omly.")]
         public int DisplayOrder { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace InfyBookWeb.Migrations
+namespace InfyBook.Migrations
 {
     public partial class AddCategoryToDatabase : Migration
     {

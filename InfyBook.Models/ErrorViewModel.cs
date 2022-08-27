@@ -1,4 +1,4 @@
-namespace InfyBookWeb.Models
+namespace InfyBook.Models
 {
     public class ErrorViewModel
     {

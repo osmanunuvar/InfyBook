@@ -1,4 +1,4 @@
-using InfyBookWeb.Data;
+using InfyBook.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

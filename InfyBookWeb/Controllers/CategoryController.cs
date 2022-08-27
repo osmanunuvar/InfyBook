@@ -1,8 +1,8 @@
-﻿using InfyBookWeb.Data;
-using InfyBookWeb.Models;
+﻿using InfyBook.Models;
+using InfyBook.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InfyBookWeb.Controllers
+namespace InfyBook.Controllers
 {
     public class CategoryController : Controller
     {

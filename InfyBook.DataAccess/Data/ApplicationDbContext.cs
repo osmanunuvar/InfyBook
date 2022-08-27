@@ -1,7 +1,7 @@
-﻿using InfyBookWeb.Models;
+﻿using InfyBook.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace InfyBookWeb.Data
+namespace InfyBook.Data
 {
     public class ApplicationDbContext:DbContext
     {

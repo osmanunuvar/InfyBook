@@ -7,15 +7,15 @@ namespace InfyBook.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _db;
-        public CategoryController(ICategoryRepository db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _db.GetAll();
+            IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
             return View(objCategoryList);
         }
         //GET
@@ -35,8 +35,8 @@ namespace InfyBook.Controllers
             if (ModelState.IsValid)
             {
 
-                _db.Add(obj);
-                _db.Save();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "category created succesfully";
                 return RedirectToAction("Index");
             }
@@ -51,7 +51,7 @@ namespace InfyBook.Controllers
                 return NotFound();
             }
             //var catgeoryFromDb = _db.Categories.Find(id);
-            var categoryFromDbFirst = _db.GetFirstOrDefault(u => u.Id==id);
+            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id==id);
             if (categoryFromDbFirst == null)
             {
                 return NotFound();
@@ -70,8 +70,8 @@ namespace InfyBook.Controllers
             if (ModelState.IsValid)
             {
 
-                _db.Update(obj);
-                _db.Save();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "category updated succesfully";
                 return RedirectToAction("Index");
             }
@@ -85,26 +85,26 @@ namespace InfyBook.Controllers
             {
                 return NotFound();
             }
-            var catgeoryFromDbFirst = _db.GetFirstOrDefault(u=>u.Id==id);
-            if (catgeoryFromDbFirst == null)
+            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u=>u.Id==id);
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
-            return View(catgeoryFromDbFirst);
+            return View(categoryFromDbFirst);
         }
         //POST
         [HttpPost,ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.GetFirstOrDefault(u => u.Id == id);
+            var obj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.Remove(obj);
-            _db.Save();
+            _unitOfWork.Category.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "category deleted succesfully";
             return RedirectToAction("Index");
 

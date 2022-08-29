@@ -1,20 +1,21 @@
 ﻿using InfyBook.Models;
 using InfyBook.Data;
 using Microsoft.AspNetCore.Mvc;
+using InfyBook.DataAccess.Repository.IRepository;
 
 namespace InfyBook.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly ICategoryRepository _db;
+        public CategoryController(ICategoryRepository db)
         {
             _db = db;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _db.Categories;
+            IEnumerable<Category> objCategoryList = _db.GetAll();
             return View(objCategoryList);
         }
         //GET
@@ -34,8 +35,8 @@ namespace InfyBook.Controllers
             if (ModelState.IsValid)
             {
 
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _db.Add(obj);
+                _db.Save();
                 TempData["success"] = "category created succesfully";
                 return RedirectToAction("Index");
             }
@@ -50,7 +51,7 @@ namespace InfyBook.Controllers
                 return NotFound();
             }
             //var catgeoryFromDb = _db.Categories.Find(id);
-            var categoryFromDbFirst = _db.Categories.FirstOrDefault(u => u.Name == "id");
+            var categoryFromDbFirst = _db.GetFirstOrDefault(u => u.Id==id);
             if (categoryFromDbFirst == null)
             {
                 return NotFound();
@@ -69,8 +70,8 @@ namespace InfyBook.Controllers
             if (ModelState.IsValid)
             {
 
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _db.Update(obj);
+                _db.Save();
                 TempData["success"] = "category updated succesfully";
                 return RedirectToAction("Index");
             }
@@ -84,26 +85,26 @@ namespace InfyBook.Controllers
             {
                 return NotFound();
             }
-            var catgeoryFromDb = _db.Categories.Find(id);
-            if (catgeoryFromDb == null)
+            var catgeoryFromDbFirst = _db.GetFirstOrDefault(u=>u.Id==id);
+            if (catgeoryFromDbFirst == null)
             {
                 return NotFound();
             }
-            return View(catgeoryFromDb);
+            return View(catgeoryFromDbFirst);
         }
         //POST
         [HttpPost,ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.Categories.Find(id);
+            var obj = _db.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _db.Remove(obj);
+            _db.Save();
             TempData["success"] = "category deleted succesfully";
             return RedirectToAction("Index");
 

@@ -49,12 +49,13 @@ namespace InfyBook.Controllers
             {
                 return NotFound();
             }
-            var catgeoryFromDb = _db.Categories.Find(id);
-            if (catgeoryFromDb == null)
+            //var catgeoryFromDb = _db.Categories.Find(id);
+            var categoryFromDbFirst = _db.Categories.FirstOrDefault(u => u.Name == "id");
+            if (categoryFromDbFirst == null)
             {
                 return NotFound();
             }
-            return View(catgeoryFromDb);
+            return View(categoryFromDbFirst);
         }
         //POST
         [HttpPost]

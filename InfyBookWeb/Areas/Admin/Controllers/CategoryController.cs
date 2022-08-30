@@ -3,7 +3,7 @@ using InfyBook.Data;
 using Microsoft.AspNetCore.Mvc;
 using InfyBook.DataAccess.Repository.IRepository;
 
-namespace InfyBook.Controllers
+namespace InfyBookWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
@@ -51,7 +51,7 @@ namespace InfyBook.Controllers
                 return NotFound();
             }
             //var catgeoryFromDb = _db.Categories.Find(id);
-            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id==id);
+            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (categoryFromDbFirst == null)
             {
                 return NotFound();
@@ -85,7 +85,7 @@ namespace InfyBook.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u=>u.Id==id);
+            var categoryFromDbFirst = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (categoryFromDbFirst == null)
             {
                 return NotFound();
@@ -93,7 +93,7 @@ namespace InfyBook.Controllers
             return View(categoryFromDbFirst);
         }
         //POST
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {

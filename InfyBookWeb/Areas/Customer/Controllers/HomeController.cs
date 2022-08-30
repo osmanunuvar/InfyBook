@@ -1,9 +1,8 @@
-﻿
-using InfyBook.Models;
+﻿using InfyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace InfyBook.Controllers
+namespace InfyBookWeb.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {

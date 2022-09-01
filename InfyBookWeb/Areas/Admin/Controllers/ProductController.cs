@@ -41,6 +41,7 @@ namespace InfyBookWeb.Areas.Admin.Controllers
             if (id == null || id == 0)
             {
                 //create product
+                ViewBag.CategoryList = CategoryList;
                 return View(product);
             }
             else

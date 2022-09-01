@@ -18,47 +18,28 @@ namespace InfyBookWeb.Areas.Admin.Controllers
             IEnumerable<CoverType> objCoverTypeList = _unitOfWork.CoverType.GetAll();
             return View(objCoverTypeList);
         }
+       
         //GET
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
-            return View();
-        }
-        //POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(CoverType obj)
-        {
-           
-            if (ModelState.IsValid)
-            {
-
-                _unitOfWork.CoverType.Add(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "CoverType created succesfully";
-                return RedirectToAction("Index");
-            }
-            return View(obj);
-        }
-
-        //GET
-        public IActionResult Edit(int? id)
-        {
+            Product product = new();
             if (id == null || id == 0)
             {
-                return NotFound();
+                //create product
+                return View(product);
+            }
+            else
+            {
+                //update product
             }
             
-            var CoverTypeFromDbFirst = _unitOfWork.CoverType.GetFirstOrDefault(u => u.Id == id);
-            if (CoverTypeFromDbFirst == null)
-            {
-                return NotFound();
-            }
-            return View(CoverTypeFromDbFirst);
+            
+            return View(product);
         }
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(CoverType obj)
+        public IActionResult Upsert(CoverType obj)
         {
            
             if (ModelState.IsValid)

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using InfyBook.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using InfyBook.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace InfyBookWeb.Areas.Admin.Controllers
 {
@@ -56,13 +57,13 @@ namespace InfyBookWeb.Areas.Admin.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(CoverType obj)
+        public IActionResult Upsert(ProductVM obj, IFormFile file)
         {
            
             if (ModelState.IsValid)
             {
 
-                _unitOfWork.CoverType.Update(obj);
+                //_unitOfWork.CoverType.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "CoverType updated succesfully";
                 return RedirectToAction("Index");

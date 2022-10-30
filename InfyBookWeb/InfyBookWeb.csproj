@@ -21,4 +21,8 @@
     <ProjectReference Include="..\InfyBook.DataAccess\InfyBook.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>

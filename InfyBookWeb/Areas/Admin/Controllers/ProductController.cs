@@ -21,10 +21,10 @@ namespace InfyBookWeb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            
+
             return View();
         }
-       
+
         //GET
         public IActionResult Upsert(int? id)
         {
@@ -63,24 +63,39 @@ namespace InfyBookWeb.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ProductVM obj, IFormFile? file)
         {
-           
+
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _hostEnvironment.WebRootPath;
-                if(file!= null)
+                if (file != null)
                 {
                     string fileName = Guid.NewGuid().ToString();
                     var uploads = Path.Combine(wwwRootPath, @"images\products");
                     var extension = Path.GetExtension(file.FileName);
 
-                    using (var fileStreams = new FileStream(Path.Combine(uploads,fileName+extension), FileMode.Create))
+                    if (obj.Product.ImageUrl != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
+                         if (System.IO.File.Exists(oldImagePath))
+                         {
+                            System.IO.File.Delete(oldImagePath);
+                         }
+                    }
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
-                    obj.Product.ImageUrl= @"images\products\"+ fileName+extension;
+                    obj.Product.ImageUrl = @"\images\products\" + fileName + extension;
                 }
-
-                _unitOfWork.Product.Add(obj.Product);
+                if (obj.Product.Id==0)
+                {
+                    _unitOfWork.Product.Add(obj.Product);
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(obj.Product);
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Product created succesfully";
                 return RedirectToAction("Index");
@@ -125,8 +140,8 @@ namespace InfyBookWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var productList = _unitOfWork.Product.GetAll(includeProperties:"Category,CoverType");
-            return Json(new {data = productList});
+            var productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
+            return Json(new { data = productList });
         }
 
         #endregion

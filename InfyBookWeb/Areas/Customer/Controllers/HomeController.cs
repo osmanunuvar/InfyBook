@@ -1,6 +1,5 @@
 ﻿using InfyBook.DataAccess.Repository.IRepository;
 using InfyBook.Models;
-using InfyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
